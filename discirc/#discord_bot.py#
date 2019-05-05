@@ -30,7 +30,7 @@ from discirc.message import Message
 __author__ = 'TROUVERIE Joachim'
 
 
-class DiscordWrapper(object):
+ class DiscordWrapper(object):
     """Discord bot wrapper
 
     :param config: config for bot

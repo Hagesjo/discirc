@@ -37,14 +37,18 @@ __author__ = 'TROUVERIE Joachim'
 @click.command()
 @click.option('-c', '--config', type=click.Path(),
               help='Alternate config file (default to ~/.discirc)')
-def main(config):
+@click.option('--verbose/--silent', default=False)
+def main(config, verbose):
     if not config:
         config = op.expanduser('~/.discirc')
     if not op.exists(config):
-        sys.exit(1, 'No config file found')
+        sys.exit('No config file found')
 
     with open(config, 'r') as fi:
         conf = json.load(fi)
+
+    if verbose:
+        conf['debug'] = True
 
     irc = IRCBot(conf)
     disc = DiscordWrapper(conf)

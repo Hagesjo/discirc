@@ -57,6 +57,7 @@ class IRCBot(bottom.Client):
         self.password = config.get('ircPass')
         self.channel_pass = config.get('channelPass', {})
         self.reconnect = config.get('ircAutoReconnect', False)
+        self.debug = config.get('debug', False)
 
         self.on('CLIENT_CONNECT', self.on_connect)
         self.on('PING', self.on_ping)
@@ -71,6 +72,11 @@ class IRCBot(bottom.Client):
         self.discord_signal = signal(SIGNALNAMES.DISCORD_MSG)
         self.discord_signal.connect(self.on_discord_message)
         self.irc_signal = signal(SIGNALNAMES.IRC_MSG)
+
+    def handle_raw(self, message):
+        if self.debug:
+            print('[IRC] Get raw message "{}"'.format(message))
+        super().handle_raw(message)
 
     def on_connect(self):
         """On connect event"""
@@ -87,6 +93,9 @@ class IRCBot(bottom.Client):
     def on_motddone(self, message):
         """Checking if Message Of The Day is done because it may
         interfere with joining channels"""
+        if self.debug:
+            print('[IRC] Received message "{}"'.format(message))
+
         for chan in self.channels.values():
             if chan not in self.channel_pass:
                 self.send('JOIN', channel=chan)
@@ -104,6 +113,9 @@ class IRCBot(bottom.Client):
         :param target: Message target (priv or channel)
         :param message: Message content
         """
+        if self.debug:
+            print('[IRC] Received message "{}"'.format(message))
+
         if nick == self.nick:
             return
 
@@ -125,6 +137,12 @@ class IRCBot(bottom.Client):
         """
         message = kwargs['data']
         private = kwargs['private']
+
+        if self.debug:
+            print(
+                '[IRC] Get message from Discord "{}"'.format(message.content)
+            )
+
         source = message.source
         content = message.content
         if not private:
