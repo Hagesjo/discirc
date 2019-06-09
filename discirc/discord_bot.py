@@ -82,7 +82,7 @@ class DiscordWrapper(object):
                 else:
                     msg = ('I do not know who you want to contact, please ' +
                            'prefix your message with @User')
-                    await self.bot.send_message(message.channel, msg)
+                    await message.channel.send(msg)
             else:
                 msg = Message(channel, source, content)
                 self.discord_signal.send(self, data=msg, private=False)
@@ -106,10 +106,10 @@ class DiscordWrapper(object):
 
         if target:
             if self._is_command(message.content):
-                await self.bot.send_message(target, message.content)
+                await target.send(message.content)
             else:
                 msg = '**<{}>** {}'.format(message.source, message.content)
-                await self.bot.send_message(target, msg)
+                await target.send(msg)
 
     def _get_user_by_name(self, username):
         """Get Discord user by his name
