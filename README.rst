@@ -3,13 +3,6 @@ DiscIRC
 
 **DiscIRC** is a bot that syncs messages between `Discord <https://discordapp.com/>`_ and `IRC <http://www.irc.org/>`_. It's written in Python using the `discord.py <https://github.com/Rapptz/discord.py>`_ and `bottom <https://github.com/numberoverzero/bottom>`_ libraries.
 
-Installation
-------------
-
-You can install it simply using `pip`::
-
-  $ pip install discirc
-
 Use
 ---
 
@@ -20,9 +13,9 @@ You first need to configure **DiscIRC** thanks to a config file. By default **Di
 
 To create a valid config file please see the `example <https://raw.githubusercontent.com/j0ack/discirc/master/config-example.json>`_.
 
-Then simply run **DiscIRC** thanks to the available command::
+Then simply run **DiscIRC**::
 
-  $ discirc
+  $ ./run
 
 Private messages
 ****************
